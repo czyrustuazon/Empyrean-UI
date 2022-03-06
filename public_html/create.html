@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<head>
+			<meta charset="utf-8">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;1,300&family=Roboto+Condensed&display=swap" rel="stylesheet"> 
+			<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;1,300&display=swap" rel="stylesheet"> 
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+			<!-- Material Design Bootstrap -->
+			<script src="script/constants.js"></script>
+		</head>
+		<title>
+			Empyrean-UI - Create
+		</title>
+	</head>
+
+	<body>
+		<div class="alert alert-warning alert-dismissible" id="showAlert" role="alert" style="display: none; position: fixed; width: 100%;">
+			<div style="display: flex;  justify-content: space-between;"><span></span><span id="alert-message"></span><button id="hide">X</button></div>
+		</div>
+		<div class="container">
+	    </div>
+
+		<main class="pt-4 mb-5">					<!-- only one of these -->		
+			
+			<section class="container">
+				<form  id="prospects_form" method="POST" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="title">Title</label>
+						<input type="text" class="form-control" name="title" aria-describedby="title" placeholder="Enter title">
+					</div>
+					<div class="form-group">
+						<label for="image">Image</label>
+						<input type="file" class="form-control-file" name="imageFile" id="imageFile">
+					</div>
+					<div class="form-group">
+						<label for="price">Price</label>
+						<input type="text" class="form-control" name="price" aria-describedby="price" placeholder="00.00">
+					</div>
+					<div class="form-group">
+						<label for="url">Url</label>
+						<input type="text" class="form-control" name="url" aria-describedby="price" placeholder="http://tshirt.com">
+					</div>
+					<div class="form-group">
+					
+						<label for="description">Description</label>
+						<textarea class="form-control" name="description" rows="3"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="tags">Tags</label>
+						<input type="text" class="form-control" name="tags" aria-describedby="tags" placeholder="">
+					</div>
+					<div class="form-group">
+						<label for="location">Location</label>
+						<input type="text" class="form-control" name="location" aria-describedby="location" placeholder="">
+					</div>
+					<div class="form-row">
+						<div class="col">
+							<label for="validation" class="">Secret 1</label>
+							<input type="text" class="form-control" name="secret" aria-describedby="secret" placeholder="">
+						</div>
+						<div class="col">
+							<label for="validation" class="">Secret 2</label>
+							<input type="text" class="form-control" name="secret2" aria-describedby="secret2" placeholder="">
+						</div>
+					</div>
+					<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+					<!--<button type="submit" name="submit" class="btn btn-primary" onclick="handleSubmit()">Submit</button>-->
+	            </form>
+			</section>
+		</main>
+		<footer>
+		</footer>
+
+	</body>
+	<!-- linking javascript -->
+	<script 
+		src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+		crossorigin="anonymous">
+	</script>
+	<script 
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" 
+		crossorigin="anonymous"></script>
+	<script>
+		$("#hide").click(function(){
+			$(".alert").hide();
+		});		
+		function randomChar(length) {
+				var result           = '';
+				var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				var charactersLength = characters.length;
+				for ( var i = 0; i < length; i++ ) {
+					result += characters.charAt(Math.floor(Math.random() * 
+					charactersLength));
+				}
+			return result;
+		}
+
+		$("#prospects_form").submit(function(e) {
+			e.preventDefault();
+			
+			let input = document.getElementById("imageFile").files[0];
+			
+			// new randomly generated file name
+			let newFile = randomChar(30);
+				
+			const formData = new FormData();
+			formData.append('tshirtImage', input, newFile);
+			  
+			var elements = document.getElementById("prospects_form").elements;
+			var tshirt ={};
+			var auth ={};
+			for(var i = 0 ; i < elements.length ; i++){
+				var item = elements.item(i);
+				if (item.name == "secret" || item.name == "secret2")
+				{
+					auth[item.name] = item.value;
+					continue;
+				}
+				if (item.name != "submit")
+				{
+					tshirt[item.name] = item.value;
+				}
+				if (item.name == "imageFile")
+				{
+					tshirt[item.name] = newFile;
+				}
+			}	
+			
+			var test = fetch(SITE_ROOT + '/api/inventory/create', {
+				method: 'POST',
+				body: JSON.stringify({tshirt,auth}),
+				headers: {
+					'Content-type': 'text/plain; charset=UTF-8',
+				}
+			})
+			.then(response => response.json())
+			.then(json => {
+				console.log(json.status);
+				$('#alert-message').text(json.status);
+				$('.alert').show();
+				
+			});
+			
+			console.log(test);
+			
+			fetch(SITE_ROOT + '/api/imageProcessor.php?secret=' + auth['secret'] + '&secret2=' + auth['secret2'], {
+				method: 'POST',
+				body: formData, 
+			})
+			.then(response => response.json())
+			.then(json => {
+				console.log(json);
+			});
+		});
+
+	</script>
+</html>
+
+<!--
+'Content-Type': 'multipart/form-data; charset=UTF-8; boundary=' + Math.random().toString().substr(2)), 
+'Content-Type': 'multipart/form-data',
+-->

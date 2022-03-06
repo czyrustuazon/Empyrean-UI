@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<head>
+			<meta charset="utf-8">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;1,300&family=Roboto+Condensed&display=swap" rel="stylesheet"> 
+			<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;1,300&display=swap" rel="stylesheet"> 
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+			<!-- Material Design Bootstrap -->
+			<script src="script/constants.js"></script>
+		</head>
+		<title>
+			Empyrean-UI - Update
+		</title>
+	</head>
+
+	<body>
+		<div class="alert alert-warning alert-dismissible" id="showAlert" role="alert" style="display: none; position: fixed; width: 100%; z-index:99999">
+			<div style="display: flex;  justify-content: space-between;"><span></span><span id="alert-message"></span><button id="hide">X</button></div>
+		</div>
+		<div class="container tshirt">
+			<!-- tshirts go here -->
+		</div>
+		
+		<div class="container">
+			<form  id="search_form" method="POST" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="title">Title</label>
+					<input type="text" class="form-control" id="search" name="search" aria-describedby="title" placeholder="Enter title">
+				</div>
+
+				<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+			</form>			
+	    </div>
+			
+		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-body">
+						<form  id="prospects_form" method="POST" enctype="multipart/form-data">
+							<input type="hidden" id="id" name="id">
+							<input type="hidden" id="fileName" name="fileName">
+							<div class="form-group">
+								<label for="title">Title</label>
+								<input type="text" id="title" class="form-control" name="title" aria-describedby="title" placeholder="Enter title">
+							</div>
+							<div class="form-group">
+								<label for="image">Image</label>
+								<input type="file" id="imageFile" class="form-control-file" name="imageFile" id="imageFile">
+							</div>
+							<div class="form-group">
+								<label for="price">Price</label>
+								<input type="text" id="price" class="form-control" name="price" aria-describedby="price" placeholder="00.00">
+							</div>
+							<div class="form-group">
+								<label for="url">Url</label>
+								<input type="text" id="url" class="form-control" name="url" aria-describedby="price" placeholder="tshirt.com">
+							</div>
+							<div class="form-group">
+							
+								<label for="description">Description</label>
+								<textarea id="description" class="form-control" name="description" rows="3"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="tags">Tags</label>
+								<input id="tags" type="text" class="form-control" name="tags" aria-describedby="tags" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="location">Location</label>
+								<input type="text" id="location" class="form-control" name="location" aria-describedby="location" placeholder="">
+							</div>
+							<div class="form-row">
+								<div class="col">
+									<label for="validation" class="">Secret 1</label>
+									<input type="text" class="form-control" name="secret" aria-describedby="secret" placeholder="">
+								</div>
+								<div class="col">
+									<label for="validation" class="">Secret 2</label>
+									<input type="text" class="form-control" name="secret2" aria-describedby="secret2" placeholder="">
+								</div>
+							</div>
+							<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+							<!--<button type="submit" name="submit" class="btn btn-primary" onclick="handleSubmit()">Submit</button>-->
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade prompt" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-body">
+						<form  id="delete_form" method="POST" enctype="multipart/form-data">
+							<input type="hidden" id="delete_id" name="delete_id">
+							<input type="hidden" id="delete_image" name="delete_image">
+							<label>Are you sure you want to delete this? Enter your validation secrets below to proceed.</div>
+							<div class="form-group">
+								<div class="col">
+									<label for="validation" class="">Secret 1</label>
+									<input type="text" class="form-control" name="secret" aria-describedby="secret" placeholder="">
+								</div>
+								<div class="col">
+									<label for="validation" class="">Secret 2</label>
+									<input type="text" class="form-control" name="secret2" aria-describedby="secret2" placeholder="">
+								</div>
+							</div>
+							<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+
+		<footer>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+			</div>
+		</footer>
+
+	</body>
+	<!-- linking javascript -->
+	<script 
+		src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+		crossorigin="anonymous">
+	</script>
+	<script 
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" 
+		crossorigin="anonymous"></script>
+	<script>
+		$("#hide").click(function(){
+			$(".alert").hide();
+		});	
+		async function exampleFetch(input) {
+			const response =  await fetch(SITE_ROOT + '/api/inventory/'+ input +'/search', {
+					method: 'POST',
+				})
+				const json = await response.json();
+				return json;
+		}	
+		$("#search_form").submit(function(e) {
+			e.preventDefault();
+			let input = document.getElementById("search").value;
+			let htmlWrapper = document.querySelector('.tshirt');
+			let tshirtCollection = '';
+			let htmlTemplate ="";
+			
+			exampleFetch(input).then(shirts => {				
+				tshirtCollection += "<table class='table-responsive'>" +
+						'<thead><tr>' +
+							'<th>Image</th>' +
+							'<th>Title</th>' +
+							'<th>Price</th>' +
+							'<th>Description</th>' +
+							'<th>URL</th>' +
+							'<th>Tags</th>' +
+							'<th>Location</th>' +
+							'<th>Modify</th>' +
+						'</tr></thead><tbody>';
+						
+				for (var c in shirts) {
+					htmlTemplate = 
+						'<tr>' +
+							'<td><div style="height:100px; width: 100px; overflow: hidden;"><img width="100%" src="'+ SITE_ROOT +'/api/image/' 	+ shirts[c].image + '"></div></td>' +
+							'<td>' 	+ shirts[c].title 		+ 	'</td>' +
+							'<td>' 	+ shirts[c].price 		+ 	'</td>' +
+							'<td>'	+ shirts[c].description	+	'</td>' +
+							'<td>'	+ decodeURIComponent(shirts[c].url)+	'</td>' +
+							'<td>'	+ shirts[c].tags		+	'</td>' +
+							'<td>'	+ shirts[c].location	+	'</td>' +
+							'<td><button type="button" class="btn btn-primary shirt_'+ c +'" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</button> ' +
+							'<button type="button" class="btn btn-primary delete_shirt_'+c+'" data-toggle="modal" data-target=".prompt">Delete</button></td>' +
+						'</tr>'
+					tshirtCollection += htmlTemplate;
+				}
+				tshirtCollection +="</tbody>"
+				$.each(shirts, function (key, value) {		
+					// IMPORTANT: This is the only way to turn the async generated buttons into actionlistenres
+					// Can use .tshirt too
+					$("body").on("click", "button.shirt_" + key, function () {
+						$('#id').val(value.id);
+						$('#title').val(value.title);
+						$('#fileName').val(value.image);
+						$('#price').val(value.price);
+						$('#url').val(decodeURIComponent(value.url));
+						$('#description').text(value.description);
+						$('#tags').val(value.tags);
+						$('#location').val(value.location);	
+					});
+				});
+				
+				$.each(shirts, function (key, value) {		
+					// IMPORTANT: This is the only way to turn the async generated buttons into actionlistenres
+					// Can use .tshirt too
+					$("body").on("click", "button.delete_shirt_" + key, function () {
+						$('#delete_id').val(value.id);
+						$('#delete_image').val(value.image);
+					});
+				
+				});
+				tshirtCollection += "</table>";
+				htmlWrapper.innerHTML = tshirtCollection;
+			}); 
+			
+		});
+			
+		function randomChar(length) {
+			var result           = '';
+			var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var charactersLength = characters.length;
+			for ( var i = 0; i < length; i++ ) {
+				result += characters.charAt(Math.floor(Math.random() * 
+				charactersLength));
+			}
+			return result;
+		}
+
+		$("#prospects_form").submit(function(e) {
+			e.preventDefault();
+			
+			let input = document.getElementById("imageFile").files[0];
+			let oldFileNameInDatabase = document.getElementById("prospects_form").elements.item(1).value;
+			
+			var elements = document.getElementById("prospects_form").elements;
+			var tshirt ={};
+			var auth = {};
+			for(var i = 0 ; i < elements.length ; i++){
+				var item = elements.item(i);
+				if (item.name == "secret" || item.name == "secret2")
+				{
+					auth[item.name] = item.value;
+					continue;
+				}
+				if (item.name != "submit")
+				{
+					tshirt[item.name] = item.value;
+				}
+				if (item.name == "imageFile")
+				{
+					tshirt[item.name] = oldFileNameInDatabase;
+				}
+			}	
+			
+
+			
+			// If the user uploaded a new picture, change the picture on the server
+			if (typeof(input) !== 'undefined'){
+				console.log(input.name);
+				
+				const formData = new FormData();
+				formData.append('tshirtImage', input, oldFileNameInDatabase);
+				
+				fetch(SITE_ROOT + '/api/imageProcessor.php?secret=' + auth['secret'] + '&secret2=' + auth['secret2'], {
+					method: 'POST',
+					body: formData, 
+				})
+				.then(response => response.json())
+				.then(json => {
+					console.log(json);
+				});
+				
+			}
+
+					
+			fetch(SITE_ROOT + '/api/inventory/update', {
+				method: 'POST',
+				body: JSON.stringify({tshirt,auth}),
+				headers: {
+					'Content-type': 'text/plain; charset=UTF-8',
+				}
+			})
+			.then(response => response.json())
+			.then(json => {
+				console.log(json);
+				
+				$('#alert-message').text(json.status);
+				$('.alert').show();
+			});		
+		});
+		
+		$("#delete_form").submit(function(e) {
+			e.preventDefault();
+						
+			var elements = document.getElementById("delete_form").elements;
+			var tshirt ={};
+			var auth ={};
+			for(var i = 0 ; i < elements.length ; i++){
+				var item = elements.item(i);
+				if (item.name == "secret" || item.name == "secret2")
+				{
+					auth[item.name] = item.value;
+					continue;
+				}
+				if (item.name == "delete_id")
+				{
+					tshirt['id'] = item.value;
+				}
+				if (item.name == "delete_image")
+				{
+					tshirt['imageFile'] = item.value;
+				}
+			}	
+			
+			fetch(SITE_ROOT + '/api/inventory/delete', {
+				method: 'POST',
+				body: JSON.stringify({tshirt,auth}),
+				headers: {
+					'Content-type': 'text/plain; charset=UTF-8',
+				}
+			})
+			.then(response => response.json())
+			.then(json => {
+				console.log(json);
+				
+				$('#search_form').trigger('click');
+				$('#alert-message').text(json.status);
+				$('.alert').show();
+			});	
+		});
+
+	</script>
+</html>
